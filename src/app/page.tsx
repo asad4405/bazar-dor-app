@@ -3,7 +3,6 @@ import Banner from "@/components/homepage/Banner";
 import TopFallers from "@/components/homepage/TopFallers";
 import TopRisers from "@/components/homepage/TopRisers";
 import { ProductType } from "@/type/Products";
-import Link from "next/link";
 
 export default async function Home() {
     const res = await fetch(`${process.env.NEXT_API_BASE_URL}/products`, {
@@ -28,7 +27,7 @@ export default async function Home() {
                     <TopRisers risers={risers} />
 
                     <TopFallers fallers={fallers} />
-                    
+
                     <AllProducts allProducts={allProducts} />
                 </div>
             </section>

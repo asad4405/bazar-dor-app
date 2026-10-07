@@ -19,7 +19,7 @@ const AllProducts = ({allProducts}: {allProducts: ProductType[]}) => {
                         return (
                             <Link
                                 key={item.id}
-                                href={`/product/${item.slug || item.id}`}
+                                href={`/products/${item.id}`}
                                 className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-all flex flex-col justify-between h-32"
                             >
                                 <div className="flex items-center gap-3">
