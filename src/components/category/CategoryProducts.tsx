@@ -14,7 +14,7 @@ export default function CategoryProducts({ products }: { products: ProductType[]
     });
 
     const categoryName = products[0]?.categoryNameBn || 'ক্যাটাগরি';
-    const categoryIcon = products[0]?.categoryIcon || products[0]?.image || '🍚';
+    const categoryIcon = products[0]?.categoryIcon || products[0]?.image;
 
     return (
         <>
@@ -57,7 +57,7 @@ export default function CategoryProducts({ products }: { products: ProductType[]
                     return (
                         <Link
                             key={item.id}
-                            href={`/product/${item.slug || item.id}`}
+                            href={`/products/${item.id}`}
                             className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all flex flex-col justify-between h-36"
                         >
                             <div className="flex items-center gap-3.5">

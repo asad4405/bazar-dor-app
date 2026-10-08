@@ -33,11 +33,11 @@ export default async function Header() {
                     </Link>
 
                     <div className="hidden sm:flex items-center gap-3">
-                        <Link href="/signin"
+                        <Link href="/sign-in"
                             className="px-4 py-2 text-sm font-semibold text-gray-800 hover:text-emerald-700 transition-colors">
                             সাইন ইন
                         </Link>
-                        <Link href="/signup"
+                        <Link href="/sign-up"
                             className="px-5 py-2 text-sm font-semibold text-white bg-[#0f8a4d] hover:bg-[#0c7340] rounded-xl shadow-md transition-all active:scale-95">
                             সাইন আপ
                         </Link>
