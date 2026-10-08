@@ -5,10 +5,9 @@ import Navbar from './Navbar';
 import UserDropdown from './UserDropdown';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import CurrentDate from './CurrentDate';
 
 export default async function Header() {
-    const date = new Date().toLocaleDateString("bn-BD", { dateStyle: 'full' });
-
     const session = await auth.api.getSession({
         headers: await headers(),
     });
@@ -16,7 +15,7 @@ export default async function Header() {
     const user = session?.user;
 
     return (
-        <header className="w-full bg-[#fcfdfd] border-b border-gray-100 shadow-sm">
+        <header className="sticky top-0 z-50 w-full bg-[#fcfdfd]/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <div className="flex items-center justify-between py-3">
@@ -35,9 +34,8 @@ export default async function Header() {
                             <span className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight leading-none">
                                 বাজার দর
                             </span>
-                            <span className="text-xs sm:text-sm font-medium text-gray-500 mt-1">
-                                {date}
-                            </span>
+                            
+                            <CurrentDate />
                         </div>
                     </Link>
 

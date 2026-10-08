@@ -9,15 +9,29 @@ const MarqueeHeadingText = async () => {
     const headlines: ProductType[] = await res.json();
 
     return (
-        <div className="flex bg-emerald-50/50 py-2 border-t border-gray-100">
-            <MarqueeText direction="right" duration={15}>
-                {headlines.map((headline, index) => (
-                    <span key={index} className="text-sm font-medium text-gray-700">
+        <div className="flex bg-[#fbfcfb] py-2 border-t border-gray-100 overflow-hidden">
+            <MarqueeText direction="right" duration={25}>
+                {headlines.map((headline) => (
+                    <div
+                        key={headline.id}
+                        className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-800 px-6 border-r border-gray-200"
+                    >
                         <span>
                             {headline.categoryIcon} {headline.nameBn} {headline.today} টাকা/{headline.unit}
                         </span>
-                        <span className="mx-4 text-gray-400">•</span>
-                    </span>
+
+                        {headline.change.dir === "up" && (
+                            <span className="text-red-600 font-bold">
+                                ▲ {headline.change.pct}%
+                            </span>
+                        )}
+
+                        {headline.change.dir === "down" && (
+                            <span className="text-emerald-600 font-bold">
+                                ▼ {headline.change.pct}%
+                            </span>
+                        )}
+                    </div>
                 ))}
             </MarqueeText>
         </div>
