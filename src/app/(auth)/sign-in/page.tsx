@@ -1,27 +1,25 @@
 "use client";
 
-import { authClient, signUp } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import React from "react";
 
-const SignUpPage = () => {
+const SignInPage = () => {
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const password = formData.get("password") as string;
 
-        const { data: resData, error } = await signUp.email({
-            name,
+        const { data: resData, error } = await signIn.email({
             email,
             password,
             callbackURL: "/",
         });
 
         if (error) {
-            console.error("Signup Error:", error);
+            console.error("Signin Error:", error);
             return;
         }
 
@@ -31,28 +29,15 @@ const SignUpPage = () => {
         <div className="w-full bg-[#f4f7f4] min-h-screen py-6 sm:py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center">
             <div className="text-center mb-6 space-y-1.5">
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-                    অ্যাকাউন্ট তৈরি করুন
+                    সাইন ইন
                 </h1>
                 <p className="text-xs sm:text-sm text-gray-500 font-normal">
-                    বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
+                    বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।
                 </p>
             </div>
 
             <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-100 space-y-5">
                 <form className="space-y-4" onSubmit={onSubmit}>
-                    <div className="space-y-1.5 text-left">
-                        <label className="text-xs font-bold text-gray-800">
-                            নাম
-                        </label>
-                        <input
-                            type="text"
-                            name="name"
-                            required
-                            placeholder="রহিম উদ্দিন ..."
-                            className="w-full bg-[#fbfcfb] border border-gray-200 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-emerald-600 transition-colors"
-                        />
-                    </div>
-
                     <div className="space-y-1.5 text-left">
                         <label className="text-xs font-bold text-gray-800">
                             ইমেইল
@@ -81,9 +66,9 @@ const SignUpPage = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-[#008744] hover:bg-[#00753a] text-white font-bold py-3 px-4 rounded-xl shadow-sm transition-colors text-xs sm:text-sm mt-2"
+                        className="w-full cursor-pointer bg-[#008744] hover:bg-[#00753a] text-white font-bold py-3 px-4 rounded-xl shadow-sm transition-colors text-xs sm:text-sm mt-2"
                     >
-                        অ্যাকাউন্ট তৈরি করুন
+                        সাইন ইন
                     </button>
                 </form>
 
@@ -98,7 +83,7 @@ const SignUpPage = () => {
                     <button
                         type="button"
                         onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/" })}
-                        className="w-full cursor-pointer bg-[#f8faf8] hover:bg-gray-100 border border-gray-200 rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-800 transition-colors"
+                        className="w-full bg-[#f8faf8] hover:bg-gray-100 border border-gray-200 rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-800 transition-colors"
                     >
                         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                             <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z" />
@@ -112,7 +97,7 @@ const SignUpPage = () => {
                     <button
                         type="button"
                         onClick={() => authClient.signIn.social({ provider: "github", callbackURL: "/" })}
-                        className="w-full bg-[#f8faf8] hover:bg-gray-100 border border-gray-200 rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-800 transition-colors"
+                        className="w-full cursor-pointer bg-[#f8faf8] hover:bg-gray-100 border border-gray-200 rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-800 transition-colors"
                     >
                         <svg className="w-4 h-4 shrink-0 fill-current text-gray-900" viewBox="0 0 24 24">
                             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
@@ -122,9 +107,9 @@ const SignUpPage = () => {
                 </div>
 
                 <div className="text-center pt-2 text-xs text-gray-500 font-medium">
-                    অ্যাকাউন্ট আছে?{' '}
-                    <Link href="/sign-in" className="text-[#008744] font-bold hover:underline">
-                        সাইন ইন করুন
+                    অ্যাকাউন্ট নেই?{' '}
+                    <Link href="/sign-up" className="text-[#008744] font-bold hover:underline">
+                        সাইন আপ করুন
                     </Link>
                 </div>
             </div>
@@ -138,4 +123,4 @@ const SignUpPage = () => {
     );
 };
 
-export default SignUpPage;
+export default SignInPage;
