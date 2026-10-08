@@ -1,8 +1,9 @@
 "use client";
 
-import { authClient, signIn } from "@/lib/auth-client";
+import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import React from "react";
+import { toast } from "react-toastify";
 
 const SignInPage = () => {
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,9 +21,39 @@ const SignInPage = () => {
 
         if (error) {
             console.error("Signin Error:", error);
+            toast.error(error.message || "ইমেইল বা পাসওয়ার্ড সঠিক নয়!");
             return;
         }
 
+        if (resData) {
+            toast.success("সফলভাবে সাইন ইন হয়েছে!");
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        toast.info("গুগল রিডাইরেক্ট করা হচ্ছে...");
+        
+        const { error } = await signIn.social({
+            provider: "google",
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error("Google দিয়ে সাইন ইন করতে সমস্যা হয়েছে!");
+        }
+    };
+
+    const handleGithubSignIn = async () => {
+        toast.info("গিটহাব রিডাইরেক্ট করা হচ্ছে...");
+
+        const { error } = await signIn.social({
+            provider: "github",
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error("GitHub দিয়ে সাইন ইন করতে সমস্যা হয়েছে!");
+        }
     };
 
     return (
@@ -82,8 +113,8 @@ const SignInPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <button
                         type="button"
-                        onClick={() => authClient.signIn.social({ provider: "google", callbackURL: "/" })}
-                        className="w-full bg-[#f8faf8] hover:bg-gray-100 border border-gray-200 rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-800 transition-colors"
+                        onClick={handleGoogleSignIn}
+                        className="w-full cursor-pointer bg-[#f8faf8] hover:bg-gray-100 border border-gray-200 rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-800 transition-colors"
                     >
                         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                             <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.3 9 5 12 5z" />
@@ -96,7 +127,7 @@ const SignInPage = () => {
 
                     <button
                         type="button"
-                        onClick={() => authClient.signIn.social({ provider: "github", callbackURL: "/" })}
+                        onClick={handleGithubSignIn}
                         className="w-full cursor-pointer bg-[#f8faf8] hover:bg-gray-100 border border-gray-200 rounded-xl py-2.5 px-3 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-800 transition-colors"
                     >
                         <svg className="w-4 h-4 shrink-0 fill-current text-gray-900" viewBox="0 0 24 24">

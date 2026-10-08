@@ -3,6 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 interface UserDropdownProps {
     user: {
@@ -17,7 +18,10 @@ export default function UserDropdown({ user }: UserDropdownProps) {
         await authClient.signOut({
             fetchOptions: {
                 onSuccess: () => {
-                    window.location.href = "/";
+                    toast.error("আপনি সাইন আউট করেছেন!");
+                },
+                onError: (ctx) => {
+                    toast.error(ctx.error.message || "সাইন আউট করতে সমস্যা হয়েছে!");
                 },
             },
         });
