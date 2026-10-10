@@ -10,11 +10,14 @@ const ProfilePage = () => {
     const user = session?.user;
 
     const handleSignOut = async () => {
+        toast.error("আপনি সাইন আউট করেছেন!");
+        
+        setTimeout(async () => {
+            window.location.href = "/";
+        }, 600);
+
         await authClient.signOut({
             fetchOptions: {
-                onSuccess: () => {
-                    toast.error("আপনি সাইন আউট করেছেন!");
-                },
                 onError: (ctx) => {
                     toast.error(ctx.error.message || "সাইন আউট করতে সমস্যা হয়েছে!");
                 },
@@ -90,7 +93,7 @@ const ProfilePage = () => {
                     <button
                         type="button"
                         onClick={handleSignOut}
-                        className="px-4 py-2 border border-red-300 text-red-500 hover:bg-red-50 font-bold rounded-xl text-xs sm:text-sm transition-colors shrink-0"
+                        className="px-4 py-2 cursor-pointer border border-red-300 text-red-500 hover:bg-red-50 font-bold rounded-xl text-xs sm:text-sm transition-colors shrink-0"
                     >
                         &larr; সাইন আউট
                     </button>

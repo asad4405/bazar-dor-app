@@ -15,13 +15,16 @@ interface UserDropdownProps {
 
 export default function UserDropdown({ user }: UserDropdownProps) {
     const handleSignOut = async () => {
+        toast.error("আপনি সাইন আউট করেছেন!");
+        
+        setTimeout(async () => {
+            window.location.href = "/";
+        }, 600);
+
         await authClient.signOut({
             fetchOptions: {
-                onSuccess: () => {
-                    toast.error("আপনি সাইন আউট করেছেন!");
-                },
                 onError: (ctx) => {
-                    toast.error(ctx.error.message || "সাইন আউট করতে সমস্যা হয়েছে!");
+                    toast.error(ctx.error.message || "সাইন আউট করতে সমস্যা হয়েছে!");
                 },
             },
         });
